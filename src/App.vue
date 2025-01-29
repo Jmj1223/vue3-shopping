@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <el-button>点击我!</el-button>
+  <el-button type="primary">点击我!</el-button>
 </template>
 
 <style scoped>
