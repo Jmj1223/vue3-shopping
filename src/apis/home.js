@@ -22,3 +22,9 @@ export function getHotAPI() {
         url: '/home/hot'
     })
 }
+
+export function getGoodsAPI() {
+    return http({
+        url: '/home/goods'
+    })
+}
