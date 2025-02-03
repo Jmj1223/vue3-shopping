@@ -8,6 +8,7 @@ import HomeProduct from '@/views/Home/components/HomeProduct.vue'
 </script>
 
 <template>
+    <!-- common.scss文件定义了container -->
     <div class="container">
         <HomeCategory />
         <HomeBanner />

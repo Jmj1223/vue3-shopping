@@ -2,17 +2,33 @@
 import { getCategoryAPI } from '@/apis/category'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { getBannerApI } from '@/apis/home'
 
 const categoryData = ref({})
 const route = useRoute()
 const getCategory = async () => {
     // route.params.id是因为category.js里面配置了params
+    // 点击路由route自带params字段
     const res = await getCategoryAPI(route.params.id)
-    console.log(res)
+    console.log('二级分类列表===', res)
     categoryData.value = res.result
 }
 onMounted(() => {
     getCategory()
+})
+
+// 获取banner
+const bannerList = ref([])
+const getBanner = async () => {
+    const res = await getBannerApI({
+        distributionSite: '2'
+    })
+    console.log('轮播图数据======', res)
+    bannerList.value = res.result
+}
+
+onMounted(() => {
+    getBanner()
 })
 </script>
 
@@ -25,6 +41,14 @@ onMounted(() => {
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
                     <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
                 </el-breadcrumb>
+            </div>
+            <!-- 轮播图 -->
+            <div class="home-banner">
+                <el-carousel height="500px">
+                    <el-carousel-item v-for="item in bannerList" :key="item.id">
+                        <img :src="item.imgUrl" :alt="item.hrefUrl">
+                    </el-carousel-item>
+                </el-carousel>
             </div>
         </div>
     </div>
@@ -107,6 +131,17 @@ onMounted(() => {
 
     .bread-container {
         padding: 25px 0;
+    }
+}
+
+.home-banner {
+    width: 1240px;
+    height: 500px;
+    margin: 0 auto;
+
+    img {
+        width: 100%;
+        height: 500px;
     }
 }
 </style>

@@ -2,6 +2,7 @@
 defineProps({
     good: {
         type: Object,
+        // 对象默认值
         default: () => { }
     }
 })
