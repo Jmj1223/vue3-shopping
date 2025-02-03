@@ -17,5 +17,7 @@ onMounted(() => {
     <LayoutHeader />
     <!-- 二级路由出口 -->
     <RouterView />
+    <!-- 添加key 破坏复用机制 强制销毁重建 -->
+    <!-- <RouterView :key="$route.fullPath" /> -->
     <LayoutFooter />
 </template>

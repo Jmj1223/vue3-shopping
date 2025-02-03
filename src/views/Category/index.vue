@@ -1,35 +1,13 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/category'
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { getBannerApI } from '@/apis/home'
+import GoodItem from '../Home/components/GoodItem.vue'
+import { useBanner } from './composables/useBanner'
+import { useCategory } from './composables/useCategory'
 
-const categoryData = ref({})
-const route = useRoute()
-const getCategory = async () => {
-    // route.params.id是因为category.js里面配置了params
-    // 点击路由route自带params字段
-    const res = await getCategoryAPI(route.params.id)
-    console.log('二级分类列表===', res)
-    categoryData.value = res.result
-}
-onMounted(() => {
-    getCategory()
-})
-
+// 获取分类数据
+const { categoryData } = useCategory()
 // 获取banner
-const bannerList = ref([])
-const getBanner = async () => {
-    const res = await getBannerApI({
-        distributionSite: '2'
-    })
-    console.log('轮播图数据======', res)
-    bannerList.value = res.result
-}
+const { bannerList } = useBanner()
 
-onMounted(() => {
-    getBanner()
-})
 </script>
 
 <template>
@@ -49,6 +27,25 @@ onMounted(() => {
                         <img :src="item.imgUrl" :alt="item.hrefUrl">
                     </el-carousel-item>
                 </el-carousel>
+            </div>
+            <div class="sub-list">
+                <h3>全部分类</h3>
+                <ul>
+                    <li v-for="i in categoryData.children" :key="i.id">
+                        <RouterLink to="/">
+                            <img :src="i.picture" />
+                            <p>{{ i.name }}</p>
+                        </RouterLink>
+                    </li>
+                </ul>
+            </div>
+            <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+                <div class="head">
+                    <h3>- {{ item.name }}-</h3>
+                </div>
+                <div class="body">
+                    <GoodItem v-for="good in item.goods" :good="good" :key="good.id" />
+                </div>
             </div>
         </div>
     </div>
