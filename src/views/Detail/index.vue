@@ -16,6 +16,9 @@ const getGoods = async () => {
 onMounted(() => {
     getGoods()
 })
+const skuChange = (sku) => {
+    console.log('sku', sku)
+}
 
 </script>
 
@@ -94,7 +97,7 @@ onMounted(() => {
                                 </dl>
                             </div>
                             <!-- sku组件 -->
-
+                            <Xtxsku :goods="goods" @change="skuChange" />
                             <!-- 数据组件 -->
 
                             <!-- 按钮组件 -->
