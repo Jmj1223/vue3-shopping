@@ -3,10 +3,10 @@
 </script>
 
 <template>
-  <el-button type="primary">点击我!</el-button>
+  <!-- <el-button type="primary">点击我!</el-button> -->
   <!-- 一级路由出口 -->
   <RouterView />
-  <div class="test">test scss</div>
+  <!-- <div class="test">test scss</div> -->
 </template>
 
 <style scoped lang="scss">
