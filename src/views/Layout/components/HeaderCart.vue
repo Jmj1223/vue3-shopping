@@ -9,6 +9,7 @@ const cartStore = useCartStore()
         <a class="curr" href="javascript:;">
             <i class="iconfont icon-cart"></i><em>{{ cartStore.cartInfo.length }}</em>
         </a>
+        <!-- 悬浮触发 -->
         <div class="layer">
             <div class="list">
 
@@ -26,7 +27,7 @@ const cartStore = useCartStore()
                             <p class="count">x{{ i.count }}</p>
                         </div>
                     </RouterLink>
-                    <i class="iconfont icon-close-new" @click="cartStore.delCart(i.skuId)"></i>
+                    <i class="iconfont icon-close-new" @click="cartStore.delcartinfo(i.skuId)"></i>
                 </div>
 
             </div>
