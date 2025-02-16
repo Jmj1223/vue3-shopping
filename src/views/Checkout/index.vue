@@ -1,8 +1,15 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { getCheckoutAPI } from '@/apis/checkout'
+import { submitPayAPI } from '@/apis/pay'
+import { useRouter } from 'vue-router'
+import { useCartStore } from '@/stores/cartStore'
+
+const cartStore = useCartStore()
+const router = useRouter()
+const toggleFlag = ref(false) // 弹框是否显示
 const checkInfo = ref({})  // 订单对象
-const curAddress = ref({})
+const curAddress = ref({}) // 默认地址
 const getCheckInfo = async () => {
     const res = await getCheckoutAPI()
     checkInfo.value = res.result
@@ -13,6 +20,49 @@ const getCheckInfo = async () => {
 onMounted(() => {
     getCheckInfo()
 })
+// 点击激活的对象
+const activeIndex = ref(0)
+const getuserAddress = (index) => {
+    console.log(index)
+    activeIndex.value = index
+    console.log(activeIndex.value)
+}
+const onClick = () => {
+    // curAddress
+    console.log(checkInfo.value.userAddresses[activeIndex.value])
+    toggleFlag.value = false
+    curAddress.value = checkInfo.value.userAddresses[activeIndex.value]
+}
+
+// 购物车
+const submitPay = async () => {
+    const res = await submitPayAPI({
+        deliveryTimeType: 1,
+        payType: 1,
+        payChannel: 1,
+        buyerMessage: '',
+        // goods: {
+        //     skuId: checkInfo.value.goods.skuId,
+        //     count: checkInfo.value.goods.count
+        // },
+        goods: checkInfo.value.goods.map(item => {
+            return {
+                skuId: item.skuId,
+                count: item.count
+            }
+        }),
+        addressId: curAddress.value.id
+    })
+    const orderId = res.result.id
+    router.push({
+        path: '/pay',
+        query: {
+            id: orderId
+        }
+    })
+    // 更新购物车
+    cartStore.updateCartList()
+}
 </script>
 
 <template>
@@ -107,12 +157,30 @@ onMounted(() => {
                 </div>
                 <!-- 提交订单 -->
                 <div class="submit">
-                    <el-button type="primary" size="large">提交订单</el-button>
+                    <el-button type="primary" size="large" @click="submitPay">提交订单</el-button>
                 </div>
             </div>
         </div>
     </div>
     <!-- 切换地址 -->
+    <el-dialog v-model="toggleFlag" title="切换收货地址" width="30%" center>
+        <div class="addressWrapper">
+            <div class="text item" v-for="(item, index) in checkInfo.userAddresses" :key="item.id"
+                @click="getuserAddress(index)" :class="{ active: index === activeIndex }">
+                <ul>
+                    <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
+                    <li><span>联系方式：</span>{{ item.contact }}</li>
+                    <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
+                </ul>
+            </div>
+        </div>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button>取消</el-button>
+                <el-button @click="onClick" type="primary">确定</el-button>
+            </span>
+        </template>
+    </el-dialog>
     <!-- 添加地址 -->
 </template>
 

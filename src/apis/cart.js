@@ -12,7 +12,7 @@ export const insertCart = ({ skuId, count }) => {
     })
 }
 
-// 获取购物车列表 登录后, 合并清空本地后, 再从服务器获取此用户最新购物车列表
+// 获取最新的购物车列表
 export const getCart = () => {
     return http({
         url: '/member/cart'

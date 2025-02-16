@@ -2,8 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // import Layout from '@/views/Layout/index.vue'
 import Login from '@/views/Login/index.vue'
 
-
-
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
@@ -49,6 +47,11 @@ const router = createRouter({
           path: 'checkout',
           name: 'Checkout',
           component: () => import('@/views/Checkout/index.vue')
+        },
+        {
+          path: 'pay',
+          name: 'Pay',
+          component: () => import('@/views/Pay/index.vue')
         }
       ]
     },

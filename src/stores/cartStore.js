@@ -21,7 +21,7 @@ export const useCartStore = defineStore('cart', () => {
     const addcartInfo = async (goods) => {
         console.log('未登录token值是: ', tokenExists.value)
         console.log('=============')
-        const { skuId, count, selected } = goods
+        const { skuId, count } = goods
         console.log('count=====', count)
         // 如果 tokenExists.value = undefined，那么 if (tokenExists.value) 可以理解为 false 
         if (tokenExists.value) {
