@@ -29,3 +29,12 @@ export const delCart = (ids) => {
         }
     })
 }
+
+// 合并购物车
+export const mergeCart = (data) => {
+    return http({
+        url: '/member/cart/merge',
+        method: 'POST',
+        data
+    })
+}

@@ -5,7 +5,7 @@ import 'element-plus/theme-chalk/el-message.css'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
-import { useCartStore } from '@/stores/cart'
+import { useCartStore } from '@/stores/cartStore'
 // 已经将components中的所有组件都进行全局化注册
 // import ImageView from '@/components/ImageView/index.vue'
 
@@ -411,4 +411,4 @@ const addCart = () => {
 .bread-container {
     padding: 25px 0;
 }
-</style>
+</style>@/stores/cartStore
