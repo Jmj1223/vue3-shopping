@@ -7,3 +7,9 @@ export const submitPayAPI = (data) => {
         data
     })
 }
+
+export const getPayAPI = (id) => {
+    return http({
+        url: `/member/order/${id}`,
+    })
+}
