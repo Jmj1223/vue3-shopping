@@ -13,3 +13,12 @@ export const getPayAPI = (id) => {
         url: `/member/order/${id}`,
     })
 }
+
+export const getLikeListAPI = ({ limit = 4 }) => {
+    return http({
+        url: '/goods/relevant',
+        params: {
+            limit
+        }
+    })
+}

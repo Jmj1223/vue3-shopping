@@ -1,4 +1,6 @@
 <script setup>
+import { getUserOrder } from '@/apis/order'
+import { onMounted, ref } from 'vue'
 // tab列表
 const tabTypes = [
     { name: "all", label: "全部订单" },
@@ -10,13 +12,54 @@ const tabTypes = [
     { name: "cancel", label: "已取消" }
 ]
 // 订单列表
-const orderList = []
-
+const orderList = ref([])
+// 分页数据
+const total = ref(0)
+/* 如果 params 是普通对象，直接传 params，不要写 params.value。
+如果 params 是 ref，使用 params.value 传递。
+如果 params 是 reactive，直接传 params。 */
+const params = ref({
+    orderState: 0,
+    page: 1,
+    pageSize: 2
+})
+const getOrderList = async () => {
+    console.log(123)
+    const res = await getUserOrder(params.value)
+    console.log('-------1111', res)
+    orderList.value = res.result.items
+    total.value = res.result.counts
+}
+onMounted(() => {
+    getOrderList()
+})
+const tabChange = (type) => {
+    console.log(type)
+    params.value.orderState = type
+    getOrderList()
+}
+const pageChange = (page) => {
+    console.log(`当前页数${page}`)
+    params.value.page = page
+    getOrderList()
+}
+// 创建格式化函数
+const fomartPayState = (payState) => {
+    const stateMap = {
+        1: '待付款',
+        2: '待发货',
+        3: '待收货',
+        4: '待评价',
+        5: '已完成',
+        6: '已取消'
+    }
+    return stateMap[payState]
+}
 </script>
 
 <template>
     <div class="order-container">
-        <el-tabs>
+        <el-tabs @tab-change="tabChange">
             <!-- tab切换 -->
             <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
@@ -57,7 +100,7 @@ const orderList = []
                                 </ul>
                             </div>
                             <div class="column state">
-                                <p>{{ order.orderState }}</p>
+                                <p>{{ fomartPayState(order.orderState) }}</p>
                                 <p v-if="order.orderState === 3">
                                     <a href="javascript:;" class="green">查看物流</a>
                                 </p>
@@ -93,7 +136,8 @@ const orderList = []
                     </div>
                     <!-- 分页 -->
                     <div class="pagination-container">
-                        <el-pagination background layout="prev, pager, next" />
+                        <el-pagination background layout="prev, pager, next" :total="total" :page-size="params.pageSize"
+                            @current-change="pageChange" />
                     </div>
                 </div>
             </div>
