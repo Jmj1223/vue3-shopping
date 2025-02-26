@@ -63,6 +63,18 @@ const submitPay = async () => {
     // 更新购物车
     cartStore.updateCartList()
 }
+
+const option = [
+    '不限送货时间：周一至周日',
+    '工作日送货：周一至周五',
+    '双休日、假日送货：周六至周日'
+]
+const PayOptions = [
+    '在线支付',
+    '货到付款'
+]
+const activeIndex1 = ref(0)
+const activeIndex2 = ref(0)
 </script>
 
 <template>
@@ -122,15 +134,20 @@ const submitPay = async () => {
                 <!-- 配送时间 -->
                 <h3 class="box-title">配送时间</h3>
                 <div class="box-body">
-                    <a class="my-btn active" href="javascript:;">不限送货时间：周一至周日</a>
+                    <!-- <a class="my-btn active" href="javascript:;">不限送货时间：周一至周日</a>
                     <a class="my-btn" href="javascript:;">工作日送货：周一至周五</a>
-                    <a class="my-btn" href="javascript:;">双休日、假日送货：周六至周日</a>
+                    <a class="my-btn" href="javascript:;">双休日、假日送货：周六至周日</a> -->
+
+                    <!-- 在`@click="activeIndex1.value = index"`中，用户试图直接修改`activeIndex1.value`。在模板中，Vue会自动解包ref，所以应该直接使用`activeIndex1 = index`，而不需要`.value`。使用`.value`在这里会导致错误，因为模板中的上下文没有`.value`属性。 -->
+                    <!-- 在模板中，`activeIndex1`会被解包为`activeIndex1.value` -->
+                    <a v-for="(item, index) in option" :key="index" @click="activeIndex1 = index" href="javascript:;"
+                        :class="['my-btn', { active: activeIndex1 === index }]">{{ item }}</a>
                 </div>
                 <!-- 支付方式 -->
                 <h3 class="box-title">支付方式</h3>
                 <div class="box-body">
-                    <a class="my-btn active" href="javascript:;">在线支付</a>
-                    <a class="my-btn" href="javascript:;">货到付款</a>
+                    <a v-for="(item, index) in PayOptions" :key="index" @click="activeIndex2 = index"
+                        :class="['my-btn', { active: activeIndex2 === index }]" href="javascript:;">{{ item }}</a>
                     <span style="color:#999">货到付款需付5元手续费</span>
                 </div>
                 <!-- 金额明细 -->
