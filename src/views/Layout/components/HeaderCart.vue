@@ -83,8 +83,8 @@ const cartStore = useCartStore()
 
     .layer {
         opacity: 0;
-        transition: all 0.4s 0.2s;
-        transform: translateY(-200px) scale(1, 0);
+        transition: all 0.4s 0.2s; // 过渡动画，0.4秒时长，0.2秒延迟
+        transform: translateY(-200px) scale(1, 0); // 初始状态：向上偏移200px，并沿y轴缩小为0（折叠）
         width: 400px;
         height: 400px;
         position: absolute;

@@ -65,6 +65,7 @@ console.log('数据-----------=', categoryStore.categoryList)
                 width: 990px;
                 height: 500px;
                 background: rgba(255, 255, 255, 0.8);
+                /* 使用了绝对定位，并且指定了相对于其定位父元素（即最近的 position 属性值不为 static 的祖先元素）的位置：*/
                 position: absolute;
                 left: 250px;
                 top: 0;

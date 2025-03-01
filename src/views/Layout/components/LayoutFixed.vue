@@ -36,9 +36,11 @@ const categoryStore = useCategoryStore()
 .app-header-sticky {
     width: 100%;
     height: 80px;
+    /* 让元素固定再页面顶部，不随滚动条滚动 */
     position: fixed;
     left: 0;
     top: 0;
+    /* 确保该元素位于其他元素之上，防止被覆盖 */
     z-index: 999;
     background-color: #fff;
     border-bottom: 1px solid #e4e4e4;
@@ -49,7 +51,9 @@ const categoryStore = useCategoryStore()
 
     /* 状态二：移除平移 + 完全不透明 */
     &.show {
+        /* 过渡动画，持续0.3秒，线性变化 */
         transition: all 0.3s linear;
+        /* 取消向上平移，使其回到原来的位置 */
         transform: none;
         opacity: 1;
     }

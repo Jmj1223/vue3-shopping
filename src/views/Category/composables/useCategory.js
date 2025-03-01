@@ -16,7 +16,6 @@ export function useCategory() {
     onMounted(() => {
         getCategory()
     })
-
     // 目标: 路由参数变化的时候 可以把分类数据接口重新发送
     onBeforeRouteUpdate((to) => {
         console.log('路由变化了!')
