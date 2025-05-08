@@ -4,6 +4,7 @@ import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
+import { throttle } from '@/utils/throttle'
 
 const useStore = useUserStore()
 const ruleForm = ref({
@@ -30,19 +31,22 @@ const rules = ref({
 // 获取form实例做统一校检规则
 const formRef = ref(null)
 const router = useRouter()
-const doLogin = () => {
+
+// 使用节流包装登录函数
+const doLogin = throttle(() => {
     formRef.value.validate(async (valid) => {
         const { account, password } = ruleForm.value
-        // valid: 所有表单都通过校检 才会true
-        console.log('所有表单都通过校检: ', valid)
-        // 全部通过校检才执行登录逻辑
         if (valid) {
-            await useStore.getuserInfo({ account, password })
-            ElMessage({ type: 'success', message: '登录成功' })
-            router.replace({ path: '/' })
+            try {
+                await useStore.getuserInfo({ account, password })
+                ElMessage({ type: 'success', message: '登录成功' })
+                router.replace({ path: '/' })
+            } catch (error) {
+                ElMessage({ type: 'error', message: '登录失败' })
+            }
         }
     })
-}
+}, 2000) // 设置1秒的节流时间
 
 </script>
 

@@ -193,7 +193,7 @@ const activeIndex2 = ref(0)
         </div>
         <template #footer>
             <span class="dialog-footer">
-                <el-button>取消</el-button>
+                <el-button @click="toggleFlag = false">取消</el-button>
                 <el-button @click="onClick" type="primary">确定</el-button>
             </span>
         </template>

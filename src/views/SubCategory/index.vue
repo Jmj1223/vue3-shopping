@@ -46,6 +46,7 @@ const load = async () => {
     reqData.value.page++
     const res = await getSubCategoryAPI(reqData.value)
     goodList.value = [...goodList.value, ...res.result.items]
+    // 也可以换种写法：goodList.value = goodList.value.concat(res.result.items)
     // 页面加载完毕 停止监听
     // 注意 res.result.items.length 而不是 res.result.items.length()
     if (res.result.items.length === 0) {

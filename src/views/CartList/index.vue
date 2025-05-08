@@ -31,8 +31,7 @@ const allCheck = (isselected) => {
                     <tbody>
                         <tr v-for="i in cartStore.cartInfo" :key="i.id">
                             <td>
-                                <el-checkbox :model-value="i.selected"
-                                    @change="(isselected) => singleCheck(i, isselected)" />
+                                <el-checkbox :model-value="i.selected" @change="(value) => singleCheck(i, value)" />
                             </td>
                             <td>
                                 <div class="goods">

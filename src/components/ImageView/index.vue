@@ -111,7 +111,7 @@ watch([elementX, elementY, isOutside], () => {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         background-repeat: no-repeat;
         // 背景图:盒子的大小 = 2:1  将来控制背景图的移动来实现放大的效果查看 background-position
-        background-size: 800px 800px;
+        background-size: 200%;
         background-color: #f8f8f8;
     }
 

@@ -11,7 +11,66 @@
 </head>
 
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <!-- 骨架屏 -->
+    <style>
+      .loading-skeleton {
+        width: 100%;
+        height: 100vh;
+        background: #f4f4f4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .loading-skeleton .skeleton-box {
+        width: 80%;
+        max-width: 600px;
+      }
+
+      .skeleton-item {
+        height: 20px;
+        background: #e8e8e8;
+        margin: 10px 0;
+        border-radius: 4px;
+        animation: skeleton-loading 1.5s infinite;
+      }
+
+      .skeleton-item:nth-child(2) {
+        width: 90%;
+      }
+
+      .skeleton-item:nth-child(3) {
+        width: 80%;
+      }
+
+      .skeleton-item:nth-child(4) {
+        width: 70%;
+      }
+
+      @keyframes skeleton-loading {
+        0% {
+          opacity: 0.6;
+        }
+
+        50% {
+          opacity: 0.8;
+        }
+
+        100% {
+          opacity: 0.6;
+        }
+      }
+    </style>
+    <div class="loading-skeleton">
+      <div class="skeleton-box">
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+      </div>
+    </div>
+  </div>
   <script type="module" src="/src/main.js"></script>
 </body>
 
