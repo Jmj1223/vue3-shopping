@@ -1,5 +1,4 @@
-# vue3-rabbit
-
+# vue3-shopping
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
